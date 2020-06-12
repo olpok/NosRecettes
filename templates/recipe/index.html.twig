@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}recipes{% endblock %}
+
+{% block body %}
+
+<h1>Gérer les recipes </h1>
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+{% endfor %}
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Sous-titre</th>
+            <th>Composition</th>
+            <th>actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for recipe in recipes %}
+        <tr>
+            <td>{{ recipe.title }}</td>
+            <td>{{ recipe.subtitle }}</td>
+            <td>
+                <section class="recipes">
+
+                    {% if not recipe.ingredients.empty %}
+                    <p>
+                        Cette recipe utilise les ingrédients suivants :
+                        {% for ingredient in recipe.ingredients %}
+                        {{ ingredient.name }}
+                        {% if not loop.last %},
+                        {% endif %}
+                        {% endfor %}
+                    </p>
+                    {% else %}
+                    <p>Cette recette n'a pas encore d'ingrédient
+                    </p>
+                    {% endif %}
+
+
+                </section>
+            </td>
+
+            <td>
+                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="btn btn-secondary">Editer</a>
+                {{ include('recipe/_delete_form.html.twig') }}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan=" 4">no records found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<section class="recipes">
+
+
+    {% for recipe in recipes %}
+    <h4>{{recipe.title}}</h4>
+    <h6>{{recipe.subtitle}}</h6>
+
+    {% if not recipe.ingredients.empty %}
+    <p>
+        Cette recette utilise les ingrédients suivants :
+        {% for ingredient in recipe.ingredients %}
+        {{ ingredient.name }}
+        {% if not loop.last %},
+        {% endif %}
+        {% endfor %}
+
+    </p>
+    {% else %}
+    <p>Cette recette n'a pas encore d'ingrédient
+    </p>
+    {% endif %}
+    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}" class="btn btn-secondary">Editer</a>
+    {{ include('recipe/_delete_form.html.twig') }}
+    {% endfor %}
+
+
+
+
+
+</section>
+
+<div class="text-right">
+    <a href="{{ path('recipe_new') }}" class="btn btn-primary">Créer une nouvelle recette</a>
+</div>
+{% endblock %}
