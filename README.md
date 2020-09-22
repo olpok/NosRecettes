@@ -1,5 +1,5 @@
  + App recettes de cuisine  dans laquelle on peut ajouter / lister / modifier / supprimer nos recettes en y ajoutant /créant/ modifiant les ingrédients.
- + API RESR CRUD pour l'entité "recette"
+ + API REST CRUD pour l'entité "recette"
 
 Installation
 
